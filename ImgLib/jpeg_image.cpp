@@ -31,7 +31,7 @@ my_error_exit (j_common_ptr cinfo) {
 // Измените его, чтобы адаптировать к переменным file и image.
 // Задание качества уберите - будет использовано качество по умолчанию
 bool SaveJPEG(const Path& file, const Image& image) {
-       jpeg_compress_struct cinfo;
+    jpeg_compress_struct cinfo;
     jpeg_error_mgr jerr;
  
     FILE* outfile;              
