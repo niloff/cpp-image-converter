@@ -29,6 +29,14 @@ static constexpr uint8_t BYTES_PER_ROW = 4;
  */
 static constexpr char HEADER_SIGNATURE[2] = {'B', 'M'};
 /**
+ * Размер BitmapFileHeader в байтах
+ */
+static constexpr uint32_t FILE_HEADER_SIZE = 14;
+/**
+ * Размер BitmapInfoHeader в байтах
+ */
+static constexpr uint32_t INFO_HEADER_SIZE = 40;
+/**
  * Функция вычисления отступа по ширине
  */
 static int GetBMPStride(int width) {
@@ -46,7 +54,7 @@ PACKED_STRUCT_BEGIN BitmapFileHeader {
      * Конструктор
      */
     BitmapFileHeader(int width, int height) {
-        size_ = 54 + GetBMPStride(width) * height;
+        size_ = FILE_HEADER_SIZE + INFO_HEADER_SIZE + GetBMPStride(width) * height;
     }
     /**
      * Подпись. Символы BM.
@@ -64,7 +72,7 @@ PACKED_STRUCT_BEGIN BitmapFileHeader {
     /**
      * Отступ данных от начала файла.
      */
-    uint32_t offset_ = 54;
+    uint32_t offset_ = FILE_HEADER_SIZE + INFO_HEADER_SIZE;
 }
 PACKED_STRUCT_END
 /**
@@ -86,7 +94,7 @@ PACKED_STRUCT_BEGIN BitmapInfoHeader {
      * Размер заголовка.
      * Учитывается только размер второй части заголовка.
      */
-    uint32_t size_ = 40;
+    uint32_t size_ = INFO_HEADER_SIZE;
     /**
      * Ширина изображения в пикселях
      */
